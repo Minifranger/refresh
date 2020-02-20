@@ -1,3 +1,4 @@
+import os
 import json
 import logging
 from refresh.utils import DecimalEncoder, dynamodb_table
@@ -14,7 +15,7 @@ def get(event, context):
         raise ValueError('You should provide a name to your path parameters')
 
     params = {
-        'TableName': 'seen-reddit-submission',
+        'TableName': os.environ['REDDIT_TABLE'],
         'Key': {'name': name}
     }
 

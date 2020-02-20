@@ -11,7 +11,7 @@ logger.setLevel(logging.INFO)
 def hot(event, context):
     logger.info('event : {event}'.format(event=event))
 
-    subreddit = event.get('pathParameters').get('name')
+    subreddit = event.get('pathParameters').get('subreddit')
     if not subreddit:
         raise ValueError('You should provide a subreddit to your path parameters')
 
