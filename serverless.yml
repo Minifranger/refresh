@@ -32,11 +32,18 @@ provider:
 #    variable1: value1
 
 functions:
-  get:
-    handler: src/reddit/woweconomy/get.get
+  hot:
+    handler: refresh/reddit/hot.hot
     events:
       - http:
-          path: refresh
+          path: reddit/{subreddit}
+          method: get
+          cors: true
+  get:
+    handler: refresh/dynamodb/get.get
+    events:
+      - http:
+          path: dynamodb/{name}
           method: get
           cors: true
 #    The following are a few example events you can configure
