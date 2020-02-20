@@ -17,8 +17,8 @@ provider:
 
   iamRoleStatements:
     - Effect: Allow
-    - Action: dynamodb:GetItem
-    - Resource: "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.REDDIT_TABLE}"
+      Action: dynamodb:GetItem
+      Resource: "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.REDDIT_TABLE}"
 
 functions:
   hot:
