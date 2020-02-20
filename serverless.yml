@@ -16,8 +16,8 @@ provider:
     REDDIT_TABLE: '${self:service}-${opt:stage, self:provider.stage}-reddit'
 
   iamRoleStatements:
-    Effect: "Allow",
-    Action: "dynamodb:GetItem",
+    Effect: "Allow"
+    Action: "dynamodb:GetItem"
     Resource: "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.REDDIT_TABLE}"
 
 functions:
