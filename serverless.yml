@@ -5,6 +5,7 @@ package:
 
 plugins:
   - serverless-python-requirements
+  -
 provider:
   name: aws
   runtime: python3.7
