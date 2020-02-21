@@ -1,6 +1,5 @@
 import decimal
 import json
-import boto3
 
 
 class DecimalEncoder(json.JSONEncoder):
