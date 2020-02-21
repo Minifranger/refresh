@@ -2,7 +2,7 @@ import json
 import logging
 from prawcore.exceptions import NotFound
 from refresh.utils import DecimalEncoder
-from refresh.reddit.reddit import reddit
+from refresh.reddit.reddit import REDDIT
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
@@ -18,7 +18,7 @@ def hot(event, context):
     logger.info('Getting hot items from {subreddit}'.format(subreddit=subreddit))
 
     try:
-        hots = [submission for submission in reddit().subreddit(subreddit).hot(limit=event.get('limit', 20))
+        hots = [submission for submission in REDDIT.subreddit(subreddit).hot(limit=event.get('limit', 20))
                 if submission.num_comments > event.get('min_comments', 100)]
     except NotFound as e:
         return {"statusCode": e.response.status_code,

@@ -16,3 +16,6 @@ def reddit():
     return praw.Reddit(client_id=secrets.get(os.environ['REDDIT_CLIENT_ID']),
                        client_secret=secrets.get(os.environ['REDDIT_CLIENT_SECRET']),
                        user_agent='refresh')
+
+
+REDDIT = reddit()
