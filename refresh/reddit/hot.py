@@ -18,7 +18,7 @@ def hot(event, context):
     logger.info('Getting hot items from {subreddit}'.format(subreddit=subreddit))
 
     try:
-        hots = [submission for submission in reddit.subreddit(subreddit).hot(limit=event.get('limit', 20))
+        hots = [submission for submission in reddit().subreddit(subreddit).hot(limit=event.get('limit', 20))
                 if submission.num_comments > event.get('min_comments', 100)]
     except NotFound as e:
         return {"statusCode": e.response.status_code,
