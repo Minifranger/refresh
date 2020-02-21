@@ -1,7 +1,8 @@
 import os
 import json
 import logging
-from refresh.utils import DecimalEncoder, dynamodb_table
+import boto3
+from refresh.utils import DecimalEncoder
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
@@ -20,7 +21,7 @@ def get(event, context):
     }
 
     logger.info('Getting items {name}'.format(name=id))
-    result = dynamodb_table(**params).get_item(**params)
+    result = boto3.resource('dynamodb').Table(params.get('TableName')).get_item(**params)
     logger.info('Response {code}'.format(code=result.get('ResponseMetadata').get('HTTPStatusCode')))
 
     response = {

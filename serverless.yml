@@ -13,6 +13,8 @@ provider:
   region: eu-west-3
 
   environment:
+    REDDIT_CLIENT_ID: 'REDDIT_CLIENT_ID'
+    REDDIT_CLIENT_SECRET: 'REDDIT_CLIENT_SECRET'
     REDDIT_TABLE: '${self:service}-${opt:stage, self:provider.stage}-reddit'
 
   iamRoleStatements:

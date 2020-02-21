@@ -10,6 +10,3 @@ class DecimalEncoder(json.JSONEncoder):
             return str(o)
         return super(DecimalEncoder, self).default(o)
 
-
-def dynamodb_table(**kwargs):
-    return boto3.resource('dynamodb').Table(kwargs.get('TableName', None))
