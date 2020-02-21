@@ -32,7 +32,7 @@ functions:
     handler: refresh/dynamodb/get.get
     events:
       - http:
-          path: dynamodb/{name}
+          path: dynamodb/{id}
           method: get
           cors: true
 #    The following are a few example events you can configure
