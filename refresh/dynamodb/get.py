@@ -10,16 +10,16 @@ logger.setLevel(logging.INFO)
 def get(event, context):
     logger.info('event : {event}'.format(event=event))
 
-    name = event.get('pathParameters').get('name')
-    if not name:
+    id = event.get('pathParameters').get('id')
+    if not id:
         raise ValueError('You should provide a name to your path parameters')
 
     params = {
         'TableName': os.environ['REDDIT_TABLE'],
-        'Key': {'name': name}
+        'Key': {'id': id}
     }
 
-    logger.info('Getting items {name}'.format(name=name))
+    logger.info('Getting items {name}'.format(name=id))
     result = dynamodb_table(**params).get_item(**params)
     logger.info('Response {code}'.format(code=result.get('ResponseMetadata').get('HTTPStatusCode')))
 
