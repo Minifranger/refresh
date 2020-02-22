@@ -28,4 +28,3 @@ def get(event, context):
         return failure(body=e)
 
     return success(body=json.dumps(result.get('Item'), cls=DecimalEncoder))
-

@@ -37,6 +37,13 @@ functions:
           path: reddit/{subreddit}
           method: get
           cors: true
+  refresh:
+    handler: refresh/reddit/refresh.refresh
+    events:
+      - http:
+          path: reddit/refresh
+          method: post
+          cors: true
   get:
     handler: refresh/dynamodb/get.get
     events:

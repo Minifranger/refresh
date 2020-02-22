@@ -30,4 +30,3 @@ def create(event, context):
         return failure(body=e)
 
     return success(body=json.dumps(params['Item'], cls=DecimalEncoder))
-

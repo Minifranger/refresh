@@ -1,0 +1,16 @@
+{
+  "body": [
+    {
+      "subreddit": "woweconomy",
+      "comments_threshold": 100
+    },
+    {
+      "subreddit": "NSFW_GIF",
+      "comments_threshold": 100
+    },
+    {
+      "subreddit": "tipofmypenis",
+      "comments_threshold": 75
+    }
+  ]
+}

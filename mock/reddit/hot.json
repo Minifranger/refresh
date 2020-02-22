@@ -1,0 +1,9 @@
+{
+  "pathParameters": {
+    "subreddit": "woweconomy"
+  },
+  "queryStringParameters": {
+    "limit": 100,
+    "comments_threshold": 100
+  }
+}
