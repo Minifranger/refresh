@@ -9,3 +9,12 @@ class DecimalEncoder(json.JSONEncoder):
             return str(o)
         return super(DecimalEncoder, self).default(o)
 
+
+def success(**kwargs):
+    status_code, body = kwargs.get('status_code', 200), kwargs.get('body')
+    return {"status_code": status_code, "body": body}
+
+
+def failure(**kwargs):
+    status_code, body = kwargs.get('status_code', 500), kwargs.get('body')
+    return {"status_code": status_code, "body": body}

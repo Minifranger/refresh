@@ -1,7 +1,7 @@
 import json
 import logging
-from prawcore.exceptions import NotFound
-from refresh.utils import DecimalEncoder
+from prawcore.exceptions import ResponseException
+from refresh.utils import DecimalEncoder, success, failure
 from refresh.reddit.reddit import REDDIT
 
 logger = logging.getLogger(__name__)
@@ -13,21 +13,16 @@ def hot(event, context):
 
     subreddit = event.get('pathParameters').get('subreddit')
     if not subreddit:
-        raise ValueError('You should provide a subreddit to your path parameters')
+        return failure(code=400, body='You should provide a subreddit to your path parameters')
 
     logger.info('Getting hot items from {subreddit}'.format(subreddit=subreddit))
 
     try:
         hots = [submission for submission in REDDIT.subreddit(subreddit).hot(limit=event.get('limit', 20))
                 if submission.num_comments > event.get('min_comments', 100)]
-    except NotFound as e:
-        return {"statusCode": e.response.status_code,
-                "body": json.dumps("Subreddit {subreddit} doesn't exist".format(subreddit=subreddit))}
+    except ResponseException as e:
+        return failure(code=e.response.status_code, body=e)
     except Exception as e:
-        return {"statusCode": e.response.status_code, "body": json.dumps(str(e), cls=DecimalEncoder)}
+        return failure(body=e)
 
-    response = {
-        "statusCode": 200,
-        "body": json.dumps({s.name: dict(title=s.title, content=s.selftext) for s in hots}, cls=DecimalEncoder)
-    }
-    return response
+    return success(body=json.dumps([{dict(id=s.id, title=s.title, content=s.selftext)} for s in hots], cls=DecimalEncoder))
