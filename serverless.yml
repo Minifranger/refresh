@@ -31,6 +31,7 @@ provider:
 
 functions:
   hot:
+    timeout: 20
     handler: refresh/reddit/hot.hot
     events:
       - http:

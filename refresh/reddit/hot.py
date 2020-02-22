@@ -27,4 +27,4 @@ def hot(event, context):
         return failure(body=e)
 
     return success(
-        body=json.dumps([dict(id=s.id, title=s.title, content=s.selftext) for s in hots], cls=DecimalEncoder))
+        body=json.dumps([dict(id=s.id, title=s.title) for s in hots], cls=DecimalEncoder))
