@@ -11,7 +11,7 @@ logger.setLevel(logging.INFO)
 def create(event, context):
     logger.info('event : {event}'.format(event=event))
 
-    body = event.get('body')
+    body = json.loads(event.get('body'))
     if not body.get('id'):
         return failure(code=400, body='You should provide a submission id to your payload')
 
