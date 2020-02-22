@@ -11,17 +11,18 @@ logger.setLevel(logging.INFO)
 def create(event, context):
     logger.info('event : {event}'.format(event=event))
 
-    if not event.get('id'):
+    body = event.get('body')
+    if not body.get('id'):
         return failure(code=400, body='You should provide a submission id to your payload')
 
     params = {
         'TableName': os.environ['REDDIT_TABLE'],
-        'Item': {'id': event['id'],
-                 'title': event.get('title'),
-                 'content': event.get('content')}
+        'Item': {'id': body.get('id'),
+                 'title': body.get('title'),
+                 'content': body.get('content')}
     }
 
-    logger.info('Creating items {id}'.format(id=id))
+    logger.info('Creating items {id}'.format(id=body.get('id')))
 
     try:
         boto3.resource('dynamodb').Table(params.get('TableName')).put_item(**params)
