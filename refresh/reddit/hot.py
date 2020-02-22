@@ -25,4 +25,4 @@ def hot(event, context):
     except Exception as e:
         return failure(body=e)
 
-    return success(body=json.dumps([{dict(id=s.id, title=s.title, content=s.selftext)} for s in hots], cls=DecimalEncoder))
+    return success(body=json.dumps([dict(id=s.id, title=s.title, content=s.selftext) for s in hots], cls=DecimalEncoder))
