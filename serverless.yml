@@ -19,7 +19,9 @@ provider:
 
   iamRoleStatements:
     - Effect: Allow
-      Action: dynamodb:GetItem
+      Action:
+       - dynamodb:GetItem
+       - dynamodb:PutItem
       Resource: "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.REDDIT_TABLE}"
     - Effect: Allow
       Action: ssm:GetParameters
