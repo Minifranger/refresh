@@ -37,6 +37,13 @@ functions:
           path: dynamodb/{id}
           method: get
           cors: true
+  create:
+    handler: refresh/dynamodb/create.create
+    events:
+      - http:
+          path: dynamodb
+          method: post
+          cors: true
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
 #    Check the event documentation for details
