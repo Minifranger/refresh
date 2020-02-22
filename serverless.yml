@@ -21,6 +21,11 @@ provider:
     - Effect: Allow
       Action: dynamodb:GetItem
       Resource: "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.REDDIT_TABLE}"
+    - Effect: Allow
+      Action: ssm:GetParameters
+      Resource:
+       - "arn:aws:ssm:${opt:region, self:provider.region}:*:parameter/${self:provider.environment.REDDIT_CLIENT_ID}"
+       - "arn:aws:ssm:${opt:region, self:provider.region}:*:parameter/${self:provider.environment.REDDIT_CLIENT_SECRET}"
 
 functions:
   hot:
