@@ -31,18 +31,18 @@ provider:
 
 functions:
   hot:
-    timeout: 20
     handler: refresh/reddit/hot.hot
     events:
       - http:
           path: reddit/{subreddit}
           method: get
           cors: true
-  refresh:
-    handler: refresh/reddit/refresh.refresh
+    timeout: 20
+  batch_hot:
+    handler: refresh/reddit/batch_hot.batch_hot
     events:
       - http:
-          path: reddit/refresh
+          path: reddit/batch_hot
           method: post
           cors: true
   get:

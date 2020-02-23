@@ -7,6 +7,8 @@ from refresh.utils import DecimalEncoder, success, failure
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
+client = boto3.resource('dynamodb')
+
 
 def get(event, context):
     logger.info('event : {event}'.format(event=event))
@@ -23,7 +25,7 @@ def get(event, context):
     logger.info('Getting items {id}'.format(id=id))
 
     try:
-        result = boto3.resource('dynamodb').Table(params.get('TableName')).get_item(**params)
+        result = client.Table(params.get('TableName')).get_item(**params)
     except Exception as e:
         return failure(body=e)
 
