@@ -27,5 +27,4 @@ def hot(event, context):
         return failure(body=e)
 
     logger.info('Retrieved hot submissions from {subreddit}'.format(subreddit=subreddit))
-    return success(
-        body=json.dumps([dict(subreddit=subreddit, id=s.id, title=s.title) for s in hots], cls=DecimalEncoder))
+    return success(body=json.dumps([dict(subreddit=subreddit, id=s.id, title=s.title) for s in hots]))
