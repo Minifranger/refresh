@@ -37,7 +37,6 @@ functions:
           path: reddit/{subreddit}
           method: get
           cors: true
-    timeout: 20
   batch_hot:
     handler: refresh/reddit/batch_hot.batch_hot
     events:

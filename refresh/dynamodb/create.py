@@ -19,9 +19,7 @@ def create(event, context):
 
     params = {
         'TableName': os.environ['REDDIT_TABLE'],
-        'Item': {'id': body.get('id'),
-                 'title': body.get('title'),
-                 'content': body.get('content')}
+        'Item': body
     }
 
     logger.info('Creating items {id}'.format(id=body.get('id')))
