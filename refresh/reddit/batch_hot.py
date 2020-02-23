@@ -2,7 +2,7 @@ import json
 import logging
 import boto3
 from itertools import chain
-from refresh.utils import failure
+from refresh.utils import success, failure
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
@@ -32,7 +32,4 @@ def batch_hot(event, context):
         except Exception as e:
             return failure(body=e)
 
-    response = list(chain(*[json.loads(b.get('body')) for b in response]))
-    print(response)
-
-    return
+    return success(body=json.dumps(list(chain(*[json.loads(b.get('body')) for b in response]))))
