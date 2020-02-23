@@ -52,6 +52,13 @@ functions:
           path: dynamodb/{id}
           method: get
           cors: true
+  batch_get:
+    handler: refresh/dynamodb/batch_get.batch_get
+    events:
+      - http:
+          path: dynamodb/batch_get
+          method: post
+          cors: true
   create:
     handler: refresh/dynamodb/create.create
     events:

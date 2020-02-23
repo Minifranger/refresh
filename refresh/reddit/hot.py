@@ -16,7 +16,7 @@ def hot(event, context):
     if not subreddit:
         return failure(code=400, body='You should provide a subreddit to your path parameters')
 
-    logger.info('Getting hot items from {subreddit}'.format(subreddit=subreddit))
+    logger.info('Getting hot submissions from {subreddit}'.format(subreddit=subreddit))
 
     try:
         hots = [submission for submission in REDDIT.subreddit(subreddit).hot(limit=query_parameters.get('limit', 20))

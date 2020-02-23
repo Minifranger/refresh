@@ -16,7 +16,9 @@ def batch_hot(event, context):
     body = json.loads(event.get('body')) if isinstance(event.get('body'), str) else event.get('body')
     response = []
 
-    logger.info('Invoking hot lambda')
+    logger.info('Getting hot submissions from {subreddit}'.format(
+        subreddit=', '.join([b.get('pathParameters').get('subreddit') for b in body])))
+
     for b in body:
         subreddit = b.get('pathParameters').get('subreddit')
         try:

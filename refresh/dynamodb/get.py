@@ -15,7 +15,7 @@ def get(event, context):
 
     id = event.get('pathParameters').get('id')
     if not id:
-        return failure(code=400, body='You should provide a name to your path parameters')
+        return failure(code=400, body='You should provide a id to your path parameters')
 
     params = {
         'TableName': os.environ['REDDIT_TABLE'],
