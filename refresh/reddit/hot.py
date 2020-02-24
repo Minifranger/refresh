@@ -12,14 +12,14 @@ def hot(event, context):
     logger.info('event : {event}'.format(event=event))
 
     subreddit = event.get('pathParameters').get('subreddit')
-    query_parameters = event.get('queryStringParameters')
+    query_parameters = event.get('queryStringParameters', dict())
     if not subreddit:
         return failure(code=400, body='You should provide a subreddit to your path parameters')
 
     logger.info('Getting hot submissions from {subreddit}'.format(subreddit=subreddit))
 
     try:
-        hots = [submission for submission in REDDIT.subreddit(subreddit).hot(limit=query_parameters.get('limit', 20))
+        response = [submission for submission in REDDIT.subreddit(subreddit).hot(limit=query_parameters.get('limit', 20))
                 if submission.num_comments > query_parameters.get('comments_threshold', 50)]
     except ResponseException as e:
         return failure(code=e.response.status_code, body=e)
@@ -27,4 +27,6 @@ def hot(event, context):
         return failure(body=e)
 
     logger.info('Retrieved hot submissions from {subreddit}'.format(subreddit=subreddit))
-    return success(body=json.dumps([dict(subreddit=subreddit, id=s.id, title=s.title) for s in hots]))
+    return success(body=json.dumps([dict(subreddit=subreddit, id=s.id, title=s.title) for s in response]))
+
+    # return success_v2(body=[dict(subreddit=subreddit, id=s.id, title=s.title) for s in response])

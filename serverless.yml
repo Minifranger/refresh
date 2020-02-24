@@ -28,6 +28,11 @@ provider:
       Resource:
        - "arn:aws:ssm:${opt:region, self:provider.region}:*:parameter/${self:provider.environment.REDDIT_CLIENT_ID}"
        - "arn:aws:ssm:${opt:region, self:provider.region}:*:parameter/${self:provider.environment.REDDIT_CLIENT_SECRET}"
+    - Effect: Allow
+      Action: lambda:InvokeFunction
+      Resource:
+        - "arn:aws:lambda:${opt:region, self:provider.region}:*:function:${self:service}-${opt:stage, self:provider.stage}-get"
+        - "arn:aws:lambda:${opt:region, self:provider.region}:*:function:${self:service}-${opt:stage, self:provider.stage}-hot"
 
 functions:
   hot:
