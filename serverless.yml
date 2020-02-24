@@ -65,6 +65,13 @@ functions:
           path: dynamodb
           method: post
           cors: true
+  batch_create:
+    handler: refresh/dynamodb/batch_create.batch_create
+    events:
+      - http:
+          path: dynamodb/batch_create
+          method: post
+          cors: true
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
 #    Check the event documentation for details

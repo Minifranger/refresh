@@ -13,9 +13,9 @@ class DecimalEncoder(json.JSONEncoder):
 
 def success(**kwargs):
     status_code, body = kwargs.get('status_code', 200), kwargs.get('body')
-    return {"statusCode": status_code, "body": body}
+    return {"statusCode": status_code, "body": str(body)}
 
 
 def failure(**kwargs):
     status_code, body = kwargs.get('status_code', 500), kwargs.get('body')
-    return {"statusCode": status_code, "body": body}
+    return {"statusCode": status_code, "body": str(body)}
