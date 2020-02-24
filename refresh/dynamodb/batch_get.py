@@ -1,8 +1,7 @@
-import os
 import json
 import logging
 import boto3
-from refresh.utils import DecimalEncoder, success, failure
+from refresh.utils import success, failure
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)

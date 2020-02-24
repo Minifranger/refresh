@@ -22,11 +22,12 @@ def create(event, context):
         'Item': body
     }
 
-    logger.info('Creating items {id}'.format(id=body.get('id')))
+    logger.info('Creating item {id}'.format(id=body.get('id')))
 
     try:
         client.Table(params.get('TableName')).put_item(**params)
     except Exception as e:
         return failure(body=e)
 
+    logger.info('Created item {id}'.format(id=id))
     return success(body=json.dumps(params['Item'], cls=DecimalEncoder))

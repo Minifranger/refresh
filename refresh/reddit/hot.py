@@ -1,7 +1,7 @@
 import json
 import logging
 from prawcore.exceptions import ResponseException
-from refresh.utils import DecimalEncoder, success, failure
+from refresh.utils import success, failure
 from refresh.reddit.reddit import REDDIT
 
 logger = logging.getLogger(__name__)

@@ -72,6 +72,13 @@ functions:
           path: dynamodb/batch_create
           method: post
           cors: true
+  refresh_hot:
+    handler: refresh/refresh_hot.refresh_hot
+    events:
+      - http:
+          path: refresh/refresh_hot
+          method: post
+          cors: true
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
 #    Check the event documentation for details

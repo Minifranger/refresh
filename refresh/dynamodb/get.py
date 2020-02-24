@@ -22,11 +22,12 @@ def get(event, context):
         'Key': {'id': id}
     }
 
-    logger.info('Getting items {id}'.format(id=id))
+    logger.info('Getting item {id}'.format(id=id))
 
     try:
         result = client.Table(params.get('TableName')).get_item(**params)
     except Exception as e:
         return failure(body=e)
 
+    logger.info('Retrieved item {id}'.format(id=id))
     return success(body=json.dumps(result.get('Item'), cls=DecimalEncoder))
