@@ -28,6 +28,6 @@ def batch_get(event, context):
     except Exception as e:
         return failure(body=e)
 
-    result = [{k: t.get(k).get('N') if t.get(k).get('N') else t.get(k).get('S')
-               for k in t.keys()} for t in result.get('Responses').get(os.environ['REDDIT_TABLE'])]
+    result = [{k: v.get('N') if v.get('N') else v.get('S') for k, v in t.items()}
+              for t in result.get('Responses').get(os.environ['REDDIT_TABLE'])]
     return success(body=json.dumps(result, cls=DecimalEncoder))
