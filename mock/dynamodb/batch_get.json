@@ -1,18 +1,18 @@
 {
   "body": [
     {
-      "id": {
-        "S": "f59tna"
+      "pathParameters": {
+        "id": "test_batch_create_1"
       }
     },
     {
-      "id": {
-        "S": "test"
+      "pathParameters": {
+        "id": "test_batch_create_1"
       }
     },
     {
-      "id": {
-        "S": "no"
+      "pathParameters": {
+        "id": "test_batch_create_2"
       }
     }
   ]

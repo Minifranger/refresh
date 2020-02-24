@@ -7,27 +7,28 @@ from refresh.utils import DecimalEncoder, success, failure
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
-client = boto3.client('dynamodb')
+client = boto3.client('lambda')
 
 
 def batch_get(event, context):
     logger.info('event : {event}'.format(event=event))
 
     body = json.loads(event.get('body')) if isinstance(event.get('body'), str) else event.get('body')
+    response = []
 
-    params = {
-        'RequestItems': {os.environ['REDDIT_TABLE']: {'Keys': body}}
-    }
+    logger.info('Getting items {id}'.format(id=', '.join([b.get('pathParameters').get('id') for b in body])))
 
-    logger.info('Getting items {id}'.format(id=', '.join([b.get('id').get('S') for b in body])))
+    for b in body:
+        id = b.get('pathParameters').get('id')
+        try:
+            result = client.invoke(FunctionName='refresh-dev-get', Payload=json.dumps(b))
+            if result.get('FunctionError'):
+                logger.warning('Could not get item {id} : {e}'.format(id=id, e=result.get('Payload').read()))
+                continue
+            else:
+                logger.info('Retrieved item {id}'.format(id=id))
+                response.append(json.loads(result.get('Payload').read()))
+        except Exception as e:
+            return failure(body=e)
 
-    try:
-        result = client.batch_get_item(**params)
-        if result.get('UnprocessedKeys'):
-            logger.info('Unprocessed keys {items}'.format(items=', '.join(result.get('UnprocessedKeys').keys())))
-    except Exception as e:
-        return failure(body=e)
-
-    result = [{k: v.get('N') if v.get('N') else v.get('S') for k, v in t.items()}
-              for t in result.get('Responses').get(os.environ['REDDIT_TABLE'])]
-    return success(body=json.dumps(result, cls=DecimalEncoder))
+    return success(body=json.dumps([json.loads(b.get('body')) for b in response]))
