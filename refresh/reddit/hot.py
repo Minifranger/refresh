@@ -1,7 +1,7 @@
 import json
 import logging
 from prawcore.exceptions import ResponseException
-from refresh.utils import success, failure
+from refresh.utils import success, failure, validate_params
 from refresh.reddit.reddit import REDDIT
 
 logger = logging.getLogger(__name__)
@@ -10,17 +10,17 @@ logger.setLevel(logging.INFO)
 
 def hot(event, context):
     logger.info('event : {event}'.format(event=event))
+    path, query = validate_params(path=event.get('pathParameters'), query=event.get('queryStringParameters'))
 
-    subreddit = event.get('pathParameters').get('subreddit')
-    query_parameters = event.get('queryStringParameters', dict())
+    subreddit = path.get('subreddit')
     if not subreddit:
         return failure(code=400, body='You should provide a subreddit to your path parameters')
 
     logger.info('Getting hot submissions from {subreddit}'.format(subreddit=subreddit))
 
     try:
-        response = [submission for submission in REDDIT.subreddit(subreddit).hot(limit=query_parameters.get('limit', 20))
-                if submission.num_comments > query_parameters.get('comments_threshold', 50)]
+        response = [submission for submission in REDDIT.subreddit(subreddit).hot(limit=query.get('limit', 20))
+                    if submission.num_comments > query.get('comments_threshold', 50)]
     except ResponseException as e:
         return failure(code=e.response.status_code, body=e)
     except Exception as e:

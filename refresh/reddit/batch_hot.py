@@ -2,7 +2,7 @@ import json
 import logging
 import boto3
 from itertools import chain
-from refresh.utils import success, failure
+from refresh.utils import success, failure, validate_params
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
@@ -12,8 +12,9 @@ client = boto3.client('lambda')
 
 def batch_hot(event, context):
     logger.info('event : {event}'.format(event=event))
+    body, = validate_params(body=event.get('body'))
 
-    body = json.loads(event.get('body')) if isinstance(event.get('body'), str) else event.get('body')
+    body = json.loads(body) if isinstance(body, str) else body
     response = []
 
     logger.info('Getting hot submissions from {subreddit}'.format(
@@ -31,6 +32,7 @@ def batch_hot(event, context):
             else:
                 logger.info('Retrieved hot submissions from {subreddit}'.format(subreddit=subreddit))
                 response.append(json.loads(result.get('Payload').read()))
+                print(response)
         except Exception as e:
             return failure(body=e)
 

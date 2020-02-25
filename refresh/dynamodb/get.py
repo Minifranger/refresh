@@ -2,7 +2,7 @@ import os
 import json
 import logging
 import boto3
-from refresh.utils import DecimalEncoder, success, failure
+from refresh.utils import DecimalEncoder, success, failure, validate_params
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
@@ -12,8 +12,9 @@ client = boto3.resource('dynamodb')
 
 def get(event, context):
     logger.info('event : {event}'.format(event=event))
+    path, = validate_params(path=event.get('pathParameters'))
 
-    id = event.get('pathParameters').get('id')
+    id = path.get('id')
     if not id:
         return failure(code=400, body='You should provide a id to your path parameters')
 

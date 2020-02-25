@@ -11,6 +11,10 @@ class DecimalEncoder(json.JSONEncoder):
         return super(DecimalEncoder, self).default(o)
 
 
+def validate_params(**kwargs):
+    return [v if v is not None else dict() for v in kwargs.values()]
+
+
 def success(**kwargs):
     status_code = kwargs.get('status_code', 200)
     body = kwargs.get('body') if isinstance(kwargs.get('body'), str) else str(kwargs.get('body'))
