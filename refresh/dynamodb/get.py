@@ -27,6 +27,8 @@ def get(event, context):
 
     try:
         result = client.Table(params.get('TableName')).get_item(**params)
+        if not result.get('Item'):
+            return success(status_code=204, body=json.dumps(result.get('Item'), cls=DecimalEncoder))
     except Exception as e:
         return failure(body=e)
 

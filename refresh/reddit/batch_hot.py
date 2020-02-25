@@ -32,8 +32,7 @@ def batch_hot(event, context):
             else:
                 logger.info('Retrieved hot submissions from {subreddit}'.format(subreddit=subreddit))
                 response.append(json.loads(result.get('Payload').read()))
-                print(response)
         except Exception as e:
             return failure(body=e)
 
-    return success(body=json.dumps(list(chain(*[b.get('body') for b in response]))))
+    return success(body=json.dumps(list(chain(*[json.loads(b.get('body')) for b in response]))))
