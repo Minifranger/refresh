@@ -33,6 +33,7 @@ provider:
       Resource:
         - "arn:aws:lambda:${opt:region, self:provider.region}:*:function:${self:service}-${opt:stage, self:provider.stage}-get"
         - "arn:aws:lambda:${opt:region, self:provider.region}:*:function:${self:service}-${opt:stage, self:provider.stage}-hot"
+        - "arn:aws:lambda:${opt:region, self:provider.region}:*:function:${self:service}-${opt:stage, self:provider.stage}-create"
 
 functions:
   hot:
