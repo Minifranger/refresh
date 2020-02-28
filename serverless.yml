@@ -13,9 +13,11 @@ provider:
   region: eu-west-3
 
   environment:
+    ACCOUNT: '166257563783'
     REDDIT_CLIENT_ID: 'REDDIT_CLIENT_ID'
     REDDIT_CLIENT_SECRET: 'REDDIT_CLIENT_SECRET'
     REDDIT_TABLE: '${self:service}-${opt:stage, self:provider.stage}-reddit'
+    REDDIT_TOPIC: 'arn:aws:sns:${opt:region, self:provider.region}:${self:provider.environment.ACCOUNT}:${self:service}-${opt:stage, self:provider.stage}-reddit'
 
   iamRoleStatements:
     - Effect: Allow
@@ -83,6 +85,13 @@ functions:
     events:
       - http:
           path: refresh/refresh_hot
+          method: post
+          cors: true
+  publish:
+    handler: refresh/notif/publish.publish
+    events:
+      - http:
+          path: notif/publish
           method: post
           cors: true
 #    The following are a few example events you can configure
